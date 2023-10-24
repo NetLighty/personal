@@ -1,12 +1,20 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
-type InitialState = {
+export type InitialState = {
   value: ChatState;
 };
 
-type ChatState = {
+export type Message = {
+  id: string;
+  username: string;
+  text: string;
+  socketId: string;
+  createdAt: Date;
+};
+
+export type ChatState = {
   isTyping: boolean;
-  messages: string[];
+  messages: Message[];
 };
 
 const initialState: InitialState = {
@@ -20,11 +28,11 @@ export const chat = createSlice({
   name: "chat",
   initialState,
   reducers: {
-    addMessage: (state, action: PayloadAction<string>) => {
+    addMessage: (state, action: PayloadAction<Message>) => {
       state.value.messages.push(action.payload);
     },
   },
 });
 
-export const {addMessage} = chat.actions;
+export const { addMessage } = chat.actions;
 export default chat.reducer;

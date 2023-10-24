@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useRef } from "react";
-import { useAppSelector } from "@/app/redux/store";
+import { useAppSelector } from "@/app/store/store";
 
 const ChatScroller: React.FC = () => {
   const messages = useAppSelector((state) => state.chatReducer.value.messages);
@@ -22,7 +22,11 @@ const ChatScroller: React.FC = () => {
               <span className="mr-2 font-semibold tracking-wide">username</span>
               <span className="opacity-70 font-light text-sm">time</span>
             </h3>
-            <div className=""><p className="whitespace-pre-line break-words hyphens-auto opacity-80">{msg}</p></div>
+            <div className="">
+              <p className="whitespace-pre-line break-words hyphens-auto opacity-80">
+                {msg.text}
+              </p>
+            </div>
           </div>
         );
       })}

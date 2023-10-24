@@ -1,24 +1,34 @@
-"use client"
-import { addMessage } from "@/app/redux/features/chat-slice";
-import { AppDispatch } from "@/app/redux/store";
+"use client";
+import { Message, addMessage } from "@/app/store/features/chat.slice";
+import { AppDispatch } from "@/app/store/store";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 
 const ChatInput: React.FC = () => {
-    const dispatch = useDispatch<AppDispatch>();
+  const [isTyping, setIstyping] = useState(false);
+  const [typingTimeout, setTypingTimeout] = useState({} as NodeJS.Timeout);
+  const dispatch = useDispatch<AppDispatch>();
 
-  const sendMessage = (msg: string) => {
+  const sendMessage = (msg: Message) => {
     dispatch(addMessage(msg));
+  };
+
+  const typing = () => {
+    setIstyping(true);
+    clearTimeout(typingTimeout)
+    setTypingTimeout(setTimeout(() => setIstyping(false), 1000));
   };
 
   return (
     <form className="px-[16px] shrink-0">
       <div
         //onClick={sendMessage}
-        className="textArea relative w-[100%] m-auto mb-[24px] bg-[#383A40] rounded-[8px]"
+        className="textArea relative w-[100%] m-auto mb-[28px] bg-[#383A40] rounded-[8px]"
       >
         <div className="scrollableContainer overflow-x-hidden overflow-y-auto max-h-[40vh]">
           <div
             onInput={(e) => {
+              typing();
               const target = e.target as HTMLDivElement;
               //setInputValue(target.innerHTML);
             }}
@@ -28,7 +38,13 @@ const ChatInput: React.FC = () => {
               if (e.key === "Enter" && e.shiftKey === false) {
                 e.preventDefault();
                 if (msgText.length !== 0) {
-                  sendMessage(msgText);
+                  sendMessage({
+                    text: msgText,
+                    id: "",
+                    username: "user",
+                    socketId: "",
+                    createdAt: new Date()
+                  });
                   target.innerHTML = "";
                 }
               }
@@ -45,6 +61,9 @@ const ChatInput: React.FC = () => {
             }}
             className="py-[11px] px-[10px] empty:before:content-[attr(placeholder)] before:opacity-50"
           ></div>
+          <div className={` ${isTyping ? "" : "hidden"} absolute typing `}>
+            ... user typing
+          </div>
         </div>
       </div>
     </form>
