@@ -1,12 +1,14 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import chatReducer from "./features/chat.slice";
 import webSocketReducer from "./features/webSocket.slice";
+import authReducer from "./features/auth.slice";
 import { TypedUseSelectorHook, useSelector } from "react-redux";
 import { webSocketMiddleware } from "./middleware/webSocket.middleware";
 
 const rootReducer = combineReducers({
   chatReducer,
   webSocketReducer,
+  authReducer,
 });
 
 export const store = configureStore({

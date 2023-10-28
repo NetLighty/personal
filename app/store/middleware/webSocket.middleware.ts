@@ -1,5 +1,6 @@
 import { CombinedState, Middleware } from "@reduxjs/toolkit";
 import { Socket, io } from "socket.io-client";
+import { v4 } from "uuid";
 import {
   ConnectionType,
   InitialState as InitialWebSocketState,
@@ -11,6 +12,8 @@ import {
   Message,
   addMessage,
 } from "../features/chat.slice";
+import { InitialState as InitialAuthState } from "../features/auth.slice";
+import { UserState } from "../features/auth.slice";
 
 export type ServerToClientListen = {
   message: (message: Message) => void;
@@ -27,9 +30,12 @@ export const webSocketMiddleware: Middleware<
   CombinedState<{
     chatReducer: InitialChatState;
     webSocketReducer: InitialWebSocketState;
+    authReducer: InitialAuthState;
   }>
 > = (store) => (next) => (action) => {
   const webSocketState: WebSocketState = store.getState().webSocketReducer;
+  const authState: InitialAuthState = store.getState().authReducer;
+  const chatState: InitialChatState = store.getState().chatReducer;
   if (webSocketState.connection === ConnectionType.Connected && !socket) {
     socket = io(appConfig.webSocket.connect);
     socket.on("connect", () => {
@@ -44,11 +50,11 @@ export const webSocketMiddleware: Middleware<
   } else if (webSocketState.connection === ConnectionType.Connected && socket) {
     if (action.type === "webSocket/send") {
       const message: Message = {
-        id: "1",
+        id: v4(),
         socketId: socket.id,
-        username: "user",
-        text: "dasd",
-        createdAt: new Date(),
+        username: authState.user.username,
+        text: chatState.value.inputText,
+        date: JSON.stringify(new Date()),
       };
       socket.emit("message", message);
     }

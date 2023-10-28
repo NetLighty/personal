@@ -1,5 +1,5 @@
 {
   "webSocket": {
-    "connect": "ws://localhost:3001"
+    "connect": "ws://localhost:3001/chat"
   }
 }

@@ -31,5 +31,5 @@ export const webSocket = createSlice({
   },
 });
 
-export const { wsConnect, wsDisconnect } = webSocket.actions;
+export const { wsConnect, wsDisconnect, send } = webSocket.actions;
 export default webSocket.reducer;

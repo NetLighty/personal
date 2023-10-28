@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useRef } from "react";
 import { useAppSelector } from "@/app/store/store";
+import { formatDateMsgMini, formatDateMsgTitle } from "@/app/common/formatDate";
 
 const ChatScroller: React.FC = () => {
   const messages = useAppSelector((state) => state.chatReducer.value.messages);
@@ -16,14 +17,24 @@ const ChatScroller: React.FC = () => {
       className="scroller pb-[20px] px-[16px] overflow-y-scroll overflow-x-hidden flex-1 "
     >
       {messages.map((msg, index) => {
+        let isSameUser = false
+        if (index !== 0 && msg.username === messages[index - 1].username) {
+          isSameUser = true
+        }
         return (
-          <div key={index} className="px-[48px] mt-[8px] text-white">
-            <h3>
-              <span className="mr-2 font-semibold tracking-wide">username</span>
-              <span className="opacity-70 font-light text-sm">time</span>
+          <div key={msg.id} className="px-[48px] text-white">
+            <h3
+              className={`${
+                isSameUser ? "hidden" : "mt-[8px]"
+              }`}
+            >
+              <span className="mr-2 font-semibold leading-3 tracking-wide">
+                {msg.username.substring(0, 10)}
+              </span>
+              <span className="opacity-70 font-light text-sm">{formatDateMsgTitle(msg.date!)}</span>
             </h3>
             <div className="">
-              <p className="whitespace-pre-line break-words hyphens-auto opacity-80">
+              <p className="whitespace-pre-line break-words hyphens-auto opacity-90">
                 {msg.text}
               </p>
             </div>
