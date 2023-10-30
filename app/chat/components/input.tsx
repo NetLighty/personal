@@ -1,7 +1,11 @@
 "use client";
 import React from "react";
 import { setInputText } from "@/app/store/features/chat.slice";
-import { addTyping, removeTyping, send } from "@/app/store/features/webSocket.slice";
+import {
+  addTyping,
+  removeTyping,
+  send,
+} from "@/app/store/features/webSocket.slice";
 import { AppDispatch, useAppSelector } from "@/app/store/store";
 import { FormEvent, useState } from "react";
 import { useDispatch } from "react-redux";
@@ -13,16 +17,16 @@ import TypingMsg from "./typingMsg";
 
 const ChatInput: React.FC = () => {
   const [inputContent, setInputContent] = useState("");
-  const user = useAppSelector(
-    (state) => state.authReducer.user
-  );
-  const typingUsers = useAppSelector(
-    (state) => state.chatReducer.value.typingUsers.filter(typingUser => typingUser.id !== user.id)
+  const user = useAppSelector((state) => state.authReducer.user);
+  const typingUsers = useAppSelector((state) =>
+    state.chatReducer.value.typingUsers.filter(
+      (typingUser) => typingUser.id !== user.id
+    )
   );
   const dispatch = useDispatch<AppDispatch>();
 
   const onInputChange = React.useCallback((evt: FormEvent) => {
-    dispatch(addTyping())
+    dispatch(addTyping());
     debounceTypingFalse();
     const sanitizeConf = {
       allowedTags: ["b", "i", "a", "p"],
@@ -47,15 +51,12 @@ const ChatInput: React.FC = () => {
   };
 
   const debounceTypingFalse = debounce(() => {
-    dispatch(removeTyping())
-  }, 100000000);
+    dispatch(removeTyping());
+  }, 1500);
 
   return (
     <form className="px-[16px] shrink-0">
-      <div
-        //onClick={sendMessage}
-        className="textArea relative w-[100%] m-auto mb-[28px] bg-[#383A40] rounded-[8px]"
-      >
+      <div className="textArea relative w-[100%] m-auto mb-[28px] bg-[#383A40] rounded-[8px]">
         <div className="scrollableContainer overflow-x-hidden overflow-y-auto max-h-[40vh]">
           <ContentEditable
             onChange={onInputChange}
@@ -64,16 +65,14 @@ const ChatInput: React.FC = () => {
             placeholder="Send message"
             aria-multiline={true}
             contentEditable={true}
-            style={{
-              position: "relative",
-              outline: "none",
-              whiteSpace: "pre-wrap",
-              overflowWrap: "break-word",
-            }}
-            className="py-[11px] px-[10px] empty:before:content-[attr(placeholder)] before:opacity-50 before:cursor-text"
+            className="relative py-[11px] px-[10px] break-words outline-none whitespace-pre-wrap empty:before:content-[attr(placeholder)] before:opacity-50 before:cursor-text"
           ></ContentEditable>
         </div>
-        <div className={` ${typingUsers.length > 0 ? "" : "hidden"} absolute flex flex-row`}>
+        <div
+          className={` ${
+            typingUsers.length > 0 ? "" : "hidden"
+          } absolute flex flex-row`}
+        >
           <TypingDots />
           <TypingMsg typingUsers={typingUsers} />
         </div>

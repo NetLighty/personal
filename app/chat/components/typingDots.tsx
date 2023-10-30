@@ -1,7 +1,3 @@
-import { useEffect, useRef } from "react";
-import { useAppSelector } from "@/app/store/store";
-import { formatDateMsgMini, formatDateMsgTitle } from "@/app/common/formatDate";
-
 const TypingDots: React.FC = () => {
   return (
     <div className="relative flex flex-row py-2 pr-2 bg-transparent">

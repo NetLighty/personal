@@ -1,31 +1,42 @@
-export const formatDateMsgTitle = (serializedDate: string) => {
+export const formatMsgDateTitle = (serializedDate: string) => {
   const now = new Date();
-  const date = new Date(JSON.parse(serializedDate));
+  const deserializedDate = new Date(JSON.parse(serializedDate));
+
   const actualDate = {
     year: now.getFullYear(),
     month: now.getMonth() + 1,
     day: now.getDate(),
   };
+
   const msgDate = {
-    year: date.getFullYear(),
-    month: date.getMonth() + 1,
-    day: date.getDate(),
-    weekDay: date.getDay(),
-    hour: date.getHours(),
-    minutes: date.getMinutes(),
-    ampm: date.getHours() >= 12 ? "PM" : "AM",
+    year: deserializedDate.getFullYear(),
+    month: deserializedDate.getMonth() + 1,
+    day: deserializedDate.getDate(),
+    weekDay: deserializedDate.getDay(),
+    hour: deserializedDate.getHours(),
+    minutes:
+      deserializedDate.getMinutes() < 10
+        ? `0${deserializedDate.getMinutes()}`
+        : `${deserializedDate.getMinutes()}`,
+    ampm: deserializedDate.getHours() >= 12 ? "PM" : "AM",
   };
-  let formattedDate = "";
+
   if (
-    actualDate.day === msgDate.day &&
     actualDate.year === msgDate.year &&
-    actualDate.month === msgDate.month
+    actualDate.month === msgDate.month &&
+    actualDate.day === msgDate.day
   ) {
-    formattedDate = `Today at ${msgDate.hour}:${
-      msgDate.minutes < 10 ? "0" : ""
-    }${msgDate.minutes} ${msgDate.ampm}`;
+    return `Today at ${msgDate.hour}:${msgDate.minutes} ${msgDate.ampm}`;
   }
-  return formattedDate;
+
+  if (
+    actualDate.year === msgDate.year &&
+    actualDate.month === msgDate.month &&
+    actualDate.day === msgDate.day - 1
+  ) {
+    return `Yesterday at ${msgDate.hour}:${msgDate.minutes} ${msgDate.ampm}`;
+  }
+  return `${msgDate.month}/${msgDate.day}/${msgDate.year} ${msgDate.hour}:${msgDate.minutes} ${msgDate.ampm}`;
 };
 
 export const formatDateMsgMini = () => {};
