@@ -31,7 +31,7 @@ const ChatScroller: React.FC = () => {
               <span className="mr-2 font-semibold leading-3 tracking-wide">
                 {msg.username.substring(0, 10)}
               </span>
-              <span className="opacity-70 font-light text-sm">{formatDateMsgTitle(msg.date!)}</span>
+              <span className="opacity-70 font-light text-xs tracking-wide">{formatDateMsgTitle(msg.date!)}</span>
             </h3>
             <div className="">
               <p className="whitespace-pre-line break-words hyphens-auto opacity-90">

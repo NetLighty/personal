@@ -28,8 +28,10 @@ export const webSocket = createSlice({
       state.connection = ConnectionType.Disconnected;
     },
     send() {},
+    addTyping() {},
+    removeTyping() {},
   },
 });
 
-export const { wsConnect, wsDisconnect, send } = webSocket.actions;
+export const { wsConnect, wsDisconnect, send, addTyping, removeTyping } = webSocket.actions;
 export default webSocket.reducer;
