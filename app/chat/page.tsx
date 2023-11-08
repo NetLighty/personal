@@ -15,11 +15,11 @@ const Chat: React.FC = () => {
   }, []);
 
   return (
-    <section className="flex relative flex-col bg-[#2E3036] w-[405px] m-auto h-[650px] mt-5">
+    <div className="hidden flex relative flex-col bg-[#2E3036] w-[405px] m-auto h-[650px] mt-5">
       <ChatTitle />
       <ChatScroller />
       <ChatInput />
-    </section>
+    </div>
   );
 };
 

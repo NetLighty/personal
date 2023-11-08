@@ -6,10 +6,13 @@ type TypingMsgProps = {
 
 const TypingMsg: React.FC<TypingMsgProps> = ({ typingUsers }) => {
   const createTypingMsg = (typingUsers: UserState[]) => {
+    if (typingUsers.length === 0) {
+      return;
+    }
     const username1 = typingUsers[0].username.substring(0, 10);
     const username2 = typingUsers[1].username.substring(0, 10);
     const username3 = typingUsers[2].username.substring(0, 10);
-    
+
     if (typingUsers.length === 1) {
       return `${username1} is typing`;
     }

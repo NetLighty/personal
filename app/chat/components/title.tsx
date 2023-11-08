@@ -13,14 +13,14 @@ const ChatTitle: React.FC = () => {
     });
   };
   return (
-    <section ref={chatRef} className="title  py-2 px-3 overflow-auto flex-none">
+    <div ref={chatRef} className="title  py-2 px-3 overflow-auto flex-none">
       <span
         onClick={downloadCanvas}
         className="text-white text-lg font-semibold"
       >
         Chat
       </span>
-    </section>
+    </div>
   );
 };
 

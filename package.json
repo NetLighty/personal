@@ -9,8 +9,12 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@react-three/drei": "^9.88.11",
+    "@react-three/fiber": "^8.15.9",
+    "@react-three/rapier": "^1.1.2",
     "@reduxjs/toolkit": "^1.9.7",
     "@types/react-redux": "^7.1.28",
+    "@types/three": "^0.158.1",
     "bufferutil": "^4.0.8",
     "html2canvas": "^1.4.1",
     "lodash": "^4.17.21",
@@ -21,6 +25,7 @@
     "react-redux": "^8.1.3",
     "sanitize-html": "^2.11.0",
     "socket.io-client": "^4.7.2",
+    "three": "^0.158.0",
     "utf-8-validate": "^6.0.3",
     "uuid": "^9.0.1",
     "ws": "^8.14.2"
